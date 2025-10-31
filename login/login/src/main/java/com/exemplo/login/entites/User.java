@@ -1,8 +1,7 @@
 package com.exemplo.login.entites;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,6 +11,8 @@ import java.util.Objects;
 public class User implements Serializable {
     private static final long serialVersionUID = 1l;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
