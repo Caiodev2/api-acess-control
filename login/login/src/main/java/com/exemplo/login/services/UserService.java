@@ -5,6 +5,8 @@ import com.exemplo.login.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -12,5 +14,10 @@ public class UserService {
 
     public User registerUser (User user){
         return userRepository.save(user);
+    }
+
+    public User findById (Long id){
+        Optional<User> obj = userRepository.findById(id);
+        return obj.get();
     }
 }
