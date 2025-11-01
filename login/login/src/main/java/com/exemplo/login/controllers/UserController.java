@@ -1,18 +1,21 @@
 package com.exemplo.login.controllers;
 
 import com.exemplo.login.entites.User;
+import com.exemplo.login.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
 public class UserController {
 
-    @GetMapping
-    public ResponseEntity<User> findAll(){
-        User u = new User(1l,"Caio","caio@gmail.com","9999999","12345");
-        return ResponseEntity.ok().body(u);
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/register")
+    public ResponseEntity<User> registerUser (@RequestBody User user){
+        User newUser = userService.registerUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 }
