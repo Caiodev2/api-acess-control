@@ -18,4 +18,10 @@ public class UserController {
         User newUser = userService.registerUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> findById (@PathVariable Long id){
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(obj);
+    }
 }
