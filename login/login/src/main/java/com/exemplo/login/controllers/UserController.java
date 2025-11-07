@@ -21,6 +21,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
+    @DeleteMapping(value = "/users/delete/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable long id){
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> loginUser (@RequestBody User user){
         boolean validate = userService.validateLogin(user.getEmail(),user.getPassword());
