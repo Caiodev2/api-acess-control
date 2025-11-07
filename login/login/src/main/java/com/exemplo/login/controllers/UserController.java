@@ -27,6 +27,12 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "users/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable long id,@RequestBody User user){
+        user = userService.updateUser(id,user);
+        return ResponseEntity.ok().body(user);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> loginUser (@RequestBody User user){
         boolean validate = userService.validateLogin(user.getEmail(),user.getPassword());

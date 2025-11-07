@@ -17,6 +17,22 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
+
+    public User updateUser (Long id, User user){
+        User entity = userRepository.getReferenceById(id);
+        updateData(entity,user);
+        return userRepository.save(entity);
+    }
+
+    public void updateData(User entity, User obj){
+        entity.setName(obj.getName());
+        entity.setEmail(obj.getEmail());
+        entity.setPhone(obj.getPhone());
+    }
+
     public boolean validateLogin(String email, String password){
         Optional<User> userOpt = findByEmail(email);
         if (userOpt.isPresent()){
@@ -24,10 +40,6 @@ public class UserService {
             return user.getPassword().equals(password);
         }
         return false;
-    }
-
-    public void deleteUser(Long id){
-        userRepository.deleteById(id);
     }
 
     public Optional<User> findByEmail(String email){
