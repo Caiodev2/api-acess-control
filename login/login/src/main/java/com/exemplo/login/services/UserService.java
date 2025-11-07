@@ -2,6 +2,7 @@ package com.exemplo.login.services;
 
 import com.exemplo.login.entites.User;
 import com.exemplo.login.repositories.UserRepository;
+import com.exemplo.login.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +49,7 @@ public class UserService {
 
     public User findById (Long id){
         Optional<User> obj = userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public List<User> findAll (){
