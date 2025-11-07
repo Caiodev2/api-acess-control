@@ -1,10 +1,12 @@
 package com.exemplo.login.controllers.exception;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
 public class StandardError implements Serializable {
-    private static final  long serialVersionUID = 1l;
+    @Serial
+    private static final  long serialVersionUID = 1L;
 
     private Instant timestamp;
     private Integer status;
