@@ -18,7 +18,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException(id);
+        }
         userRepository.deleteById(id);
     }
 
