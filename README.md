@@ -222,7 +222,6 @@ Algumas melhorias que podem ser implementadas futuramente:
 * [ ] Criptografia de senhas com BCrypt
 * [ ] Autenticação utilizando JWT
 * [ ] Spring Security
-* [ ] DTOs para entrada e saída de dados
 * [ ] Validação de dados com Bean Validation
 * [ ] Tratamento de erros de validação
 * [ ] Padronização das respostas da API
