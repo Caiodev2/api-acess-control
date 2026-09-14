@@ -1,5 +1,8 @@
 package com.exemplo.login.dto;
 
+import com.exemplo.login.entites.User;
+import org.springframework.beans.BeanUtils;
+
 public class UserDto {
 
     private Long id;
@@ -7,6 +10,14 @@ public class UserDto {
     private String email;
     private String phone;
     private String password;
+
+    public  UserDto(User user){
+        BeanUtils.copyProperties(user, this);
+    }
+
+    public UserDto(){
+
+    }
 
     public Long getId() {
         return id;
