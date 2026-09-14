@@ -1,5 +1,7 @@
 package com.exemplo.login.services;
 
+import com.exemplo.login.dto.UserDto;
+import com.exemplo.login.dto.UserInsertDto;
 import com.exemplo.login.entites.User;
 import com.exemplo.login.repositories.UserRepository;
 import com.exemplo.login.services.exceptions.ResourceNotFoundException;
@@ -14,7 +16,14 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User registerUser(User user){
+    public User registerUser(UserInsertDto userInsertDto){
+        User user = new User();
+
+        user.setName(userInsertDto.getName());
+        user.setEmail(userInsertDto.getEmail());
+        user.setPhone(userInsertDto.getPhone());
+        user.setPassword(userInsertDto.getPassword());
+
         return userRepository.save(user);
     }
 

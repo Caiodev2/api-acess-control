@@ -1,5 +1,7 @@
 package com.exemplo.login.controllers;
 
+import com.exemplo.login.dto.UserDto;
+import com.exemplo.login.dto.UserInsertDto;
 import com.exemplo.login.entites.User;
 import com.exemplo.login.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,9 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser (@RequestBody User user){
-        User newUser = userService.registerUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    public ResponseEntity<UserDto> registerUser (@RequestBody UserInsertDto userInsertDto){
+        User user = userService.registerUser(userInsertDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDto(user));
     }
 
     @DeleteMapping(value = "/users/delete/{id}")
@@ -28,9 +30,9 @@ public class UserController {
     }
 
     @PutMapping(value = "users/update/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable long id,@RequestBody User user){
+    public ResponseEntity<UserDto> updateUser(@PathVariable long id,@RequestBody User user){
         user = userService.updateUser(id,user);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(new UserDto(user));
     }
 
     @PostMapping("/login")
@@ -44,14 +46,16 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> findById (@PathVariable Long id){
+    public ResponseEntity<UserDto> findById (@PathVariable Long id){
         User obj = userService.findById(id);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(new UserDto(obj));
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> findAll (){
+    public ResponseEntity<List<UserDto>> findAll (){
         List<User> listUsers = userService.findAll();
-        return ResponseEntity.ok().body(listUsers);
+        List<UserDto> usersDto = listUsers.stream().map(UserDto::new).toList();
+
+        return ResponseEntity.ok().body(usersDto);
     }
 }

@@ -1,28 +1,20 @@
 package com.exemplo.login.dto;
 
-import com.exemplo.login.entites.User;
-import org.springframework.beans.BeanUtils;
+public class UserInsertDto {
 
-public class UserDto {
-
-    private Long id;
     private String name;
     private String email;
     private String phone;
+    private String password;
 
-    public UserDto(User user){
-        this.id = user.getId();
-        this.name = user.getName();
-        this.email = user.getEmail();
-        this.phone = user.getPhone();
+    public UserInsertDto(){
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public UserInsertDto(String name, String password, String phone, String email) {
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.email = email;
     }
 
     public String getName() {
@@ -47,5 +39,13 @@ public class UserDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

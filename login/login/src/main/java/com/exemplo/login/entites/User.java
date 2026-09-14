@@ -35,6 +35,10 @@ public class User implements Serializable {
         BeanUtils.copyProperties(userDto, this);
     }
 
+    public User(){
+    }
+
+
 
     public Long getId() {
         return id;
