@@ -1,7 +1,9 @@
 package com.exemplo.login.entites;
 
 
+import com.exemplo.login.dto.UserDto;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -21,9 +23,6 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
-    public User(){
-    }
-
     public User(Long id, String name, String email, String phone, String password) {
         this.id = id;
         this.name = name;
@@ -31,6 +30,11 @@ public class User implements Serializable {
         this.phone = phone;
         this.password = password;
     }
+
+    public User(UserDto userDto){
+        BeanUtils.copyProperties(userDto, this);
+    }
+
 
     public Long getId() {
         return id;
