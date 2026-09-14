@@ -9,7 +9,6 @@ public class UserDto {
     private String name;
     private String email;
     private String phone;
-    private String password;
 
     public  UserDto(User user){
         BeanUtils.copyProperties(user, this);
@@ -49,13 +48,5 @@ public class UserDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
