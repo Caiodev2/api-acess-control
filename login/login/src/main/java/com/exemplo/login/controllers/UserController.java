@@ -1,5 +1,6 @@
 package com.exemplo.login.controllers;
 
+import com.exemplo.login.dto.AuthenticationDto;
 import com.exemplo.login.dto.UserDto;
 import com.exemplo.login.dto.UserInsertDto;
 import com.exemplo.login.entites.User;
@@ -36,8 +37,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser (@RequestBody User user){
-        boolean validate = userService.validateLogin(user.getEmail(),user.getPassword());
+    public ResponseEntity<String> loginUser (@RequestBody AuthenticationDto data){
+        boolean validate = userService.validateLogin(data.getEmail(),data.getPassword());
 
         if (validate){
             return ResponseEntity.ok().body("Logado com sucesso!!");

@@ -10,11 +10,12 @@ public class UserInsertDto {
     public UserInsertDto(){
     }
 
-    public UserInsertDto(String name, String password, String phone, String email) {
+    public UserInsertDto(String name, String email, String phone, String password) {
         this.name = name;
-        this.password = password;
-        this.phone = phone;
         this.email = email;
+        this.phone = phone;
+        this.password = password;
+
     }
 
     public String getName() {
