@@ -6,6 +6,7 @@ import com.exemplo.login.entites.User;
 import com.exemplo.login.repositories.UserRepository;
 import com.exemplo.login.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +14,14 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    UserRepository userRepository;
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public User registerUser(UserInsertDto userInsertDto){
         User user = new User();
@@ -22,7 +29,7 @@ public class UserService {
         user.setName(userInsertDto.getName());
         user.setEmail(userInsertDto.getEmail());
         user.setPhone(userInsertDto.getPhone());
-        user.setPassword(userInsertDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userInsertDto.getPassword()));
 
         return userRepository.save(user);
     }

@@ -23,11 +23,16 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable() )
                 .cors(cors -> cors.configure(http))
+                .headers(headers ->
+                        headers.frameOptions(frame -> frame.disable())
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                        .requestMatchers(HttpMethod.GET).permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/register").permitAll().anyRequest().authenticated()).build();
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll().anyRequest().permitAll()).build();
     }
 
     @Bean

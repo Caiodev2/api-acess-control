@@ -8,6 +8,7 @@ import com.exemplo.login.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +16,13 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private UserService userService;
+    private AuthenticationManager authenticationManager;
+
+    public UserController(UserService userService, AuthenticationManager authenticationManager){
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<UserDto> registerUser (@RequestBody UserInsertDto userInsertDto){
