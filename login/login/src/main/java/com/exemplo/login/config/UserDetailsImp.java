@@ -29,6 +29,14 @@ public class UserDetailsImp implements UserDetails {
         return user.getEmail();
     }
 
+    public User getUser(){
+        return  user;
+    }
+
+    public Long getUseId(){
+        return user.getId();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();

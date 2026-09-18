@@ -1,14 +1,17 @@
 package com.exemplo.login.controllers;
 
+import com.exemplo.login.config.JwtConfig;
+import com.exemplo.login.config.UserDetailsImp;
 import com.exemplo.login.dto.AuthenticationDto;
 import com.exemplo.login.dto.UserDto;
 import com.exemplo.login.dto.UserInsertDto;
 import com.exemplo.login.entites.User;
 import com.exemplo.login.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +21,12 @@ public class UserController {
 
     private UserService userService;
     private AuthenticationManager authenticationManager;
+    private JwtConfig jwtConfig;
 
-    public UserController(UserService userService, AuthenticationManager authenticationManager){
+    public UserController(UserService userService, AuthenticationManager authenticationManager, JwtConfig jwtConfig){
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+        this.jwtConfig = jwtConfig;
     }
 
     @PostMapping("/register")
@@ -32,12 +37,12 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser (@RequestBody AuthenticationDto data){
-        boolean validate = userService.validateLogin(data.getEmail(),data.getPassword());
+        UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
+        Authentication authentication = authenticationManager.authenticate(userAndPass);
 
-        if (validate){
-            return ResponseEntity.ok().body("Logado com sucesso!!");
-        }
-        return ResponseEntity.status(401).body("Email ou senha incorreto");
+        UserDetailsImp userDetailsImp = (UserDetailsImp) authentication.getPrincipal();
+        String token = jwtConfig.generateToken(userDetailsImp);
+        return ResponseEntity.ok(token);
     }
 
     @DeleteMapping(value = "/users/delete/{id}")
