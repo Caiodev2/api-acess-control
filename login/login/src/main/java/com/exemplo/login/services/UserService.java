@@ -53,14 +53,6 @@ public class UserService {
         entity.setPhone(obj.getPhone());
     }
 
-    public boolean validateLogin(String email, String password){
-        Optional<User> userOpt = findByEmail(email);
-        if (userOpt.isPresent()){
-            User user = userOpt.get();
-            return user.getPassword().equals(password);
-        }
-        return false;
-    }
 
     public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
