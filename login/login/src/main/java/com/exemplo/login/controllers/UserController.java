@@ -30,6 +30,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new UserDto(user));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser (@RequestBody AuthenticationDto data){
+        boolean validate = userService.validateLogin(data.getEmail(),data.getPassword());
+
+        if (validate){
+            return ResponseEntity.ok().body("Logado com sucesso!!");
+        }
+        return ResponseEntity.status(401).body("Email ou senha incorreto");
+    }
+
     @DeleteMapping(value = "/users/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable long id){
         userService.deleteUser(id);
@@ -40,16 +50,6 @@ public class UserController {
     public ResponseEntity<UserDto> updateUser(@PathVariable long id,@RequestBody User user){
         user = userService.updateUser(id,user);
         return ResponseEntity.ok().body(new UserDto(user));
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<String> loginUser (@RequestBody AuthenticationDto data){
-        boolean validate = userService.validateLogin(data.getEmail(),data.getPassword());
-
-        if (validate){
-            return ResponseEntity.ok().body("Logado com sucesso!!");
-        }
-        return ResponseEntity.status(401).body("Email ou senha incorreto");
     }
 
     @GetMapping("/users/{id}")

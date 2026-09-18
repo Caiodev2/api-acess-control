@@ -2,6 +2,6 @@ package com.exemplo.login.services.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(Long id) {
-        super("Não foi possível deleter o user" + id);
+        super("The user with the ID " + id + " could not be found.");
     }
 }

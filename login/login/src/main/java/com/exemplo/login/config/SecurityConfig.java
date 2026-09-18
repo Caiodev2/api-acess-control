@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET).permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/register").permitAll().anyRequest().permitAll()).build();
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll().anyRequest().authenticated()).build();
     }
 
     @Bean

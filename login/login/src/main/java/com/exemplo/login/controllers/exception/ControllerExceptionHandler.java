@@ -16,7 +16,11 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
         String error = "Resource not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
-        StandardError err = new StandardError(Instant.now(),status.value(),e.getMessage(),request.getRequestURI());
+        StandardError err = new StandardError(Instant
+                .now()
+                ,status.value()
+                ,e.getMessage()
+                ,request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }
