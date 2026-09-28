@@ -4,6 +4,7 @@ import com.exemplo.login.dto.UserDto;
 import com.exemplo.login.dto.UserInsertDto;
 import com.exemplo.login.entites.User;
 import com.exemplo.login.repositories.UserRepository;
+import com.exemplo.login.services.exceptions.EmailAlreadyEcistsException;
 import com.exemplo.login.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +25,11 @@ public class UserService {
     }
 
     public User registerUser(UserInsertDto userInsertDto){
+
+        if  (userRepository.findByEmail(userInsertDto.getEmail()).isPresent()){
+            throw new EmailAlreadyEcistsException(userInsertDto.getEmail());
+        }
+
         User user = new User();
 
         user.setName(userInsertDto.getName());
